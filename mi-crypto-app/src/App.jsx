@@ -1,15 +1,25 @@
 import { useState } from 'react'
 import Low_bar from './Low_bar.jsx'
-import Main_screen from './main_screen.jsx'
+import Main_screen from './Main_screen.jsx'
 import High_bar from './high_bar.jsx' 
 function App() {
 
 
   return (
     <>
-      <High_bar/>
-      <Main_screen/>
-      <Low_bar/>
+
+      <High_bar /> 
+
+      <Routes>
+       
+        <Route path="/" element={<MainScreen />} />
+        
+       
+        <Route path="/crypto/:id" element={<MainScreen />} />
+      </Routes>
+
+      
+      <Low_bar />
     </>
   )
 }

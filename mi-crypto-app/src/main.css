@@ -1,20 +1,20 @@
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box; /* Esto evita que el padding rompa el ancho de tus divs */
+  box-sizing: border-box;
 }
 
 body {
-  font-family: sans-serif; /* O la que prefieras */
+  font-family: sans-serif; 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 ul, ol {
-  list-style: none; /* Quita los puntos de las listas */
+  list-style: none; 
 }
 
 a {
-  text-decoration: none; /* Quita el subrayado azul de los links */
+  text-decoration: none; 
   color: inherit;
 }
