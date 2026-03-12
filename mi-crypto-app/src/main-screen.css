@@ -1,0 +1,23 @@
+.main-screen {
+    display: flex;
+    background-color: #161a25;
+    padding: 20px;
+    text-align: center;
+    font-size: 24px;
+    color: #faf5f5;
+    height: 100vh;
+    display: flex;
+    flex-direction: lower;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    width: 90vw;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 40px 40px;
+}
+.crypto_chart{
+    width: 90vw;
+    
+}

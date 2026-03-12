@@ -10,7 +10,7 @@ export default function high_bar() {
         <div className="high-bar" >
         {cryptos.map(crypto => (
           <Link to={`/crypto/${crypto.id}`} style={{ textDecoration: 'none', color: 'inherit' }} >
-        <div key={crypto.id} className="crypto_card">
+        <div key={crypto.id} className="crypto-card">
         <img src={crypto.imagen} alt={crypto.nombre} width="30" />
         <div>
           <h3>{crypto.nombre} ({crypto.simbolo})</h3>

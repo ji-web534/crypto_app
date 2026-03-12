@@ -1,0 +1,12 @@
+.Details-bar{
+display: flex;
+z-index: 1000;
+width: 90vw;
+ background-color: #0f0f0f;
+ margin-bottom: 1px;
+ align-items: center;
+ position: fixed;  
+    top: 0;            
+    right: 0;
+    border-left:  1px solid #ffffff;
+}

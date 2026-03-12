@@ -1,0 +1,12 @@
+.Coin-value{
+     display: flex;
+     margin-bottom: 0;
+      position: fixed;  
+    bottom:0 ;           
+     background-color: #0f0f0f;
+    width: 90vw;
+    border-left:  1px solid #ffffff;
+    flex-direction: row;
+    align-items: center;
+    height: 3vw;
+}

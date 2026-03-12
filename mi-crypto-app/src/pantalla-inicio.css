@@ -1,4 +1,8 @@
 .pantalla-inicio{
-     background-color: aqua;
-     width: 100vh;
+     width: 100vw;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+       background-color: #161a25;
+      height:100vh ;
 }

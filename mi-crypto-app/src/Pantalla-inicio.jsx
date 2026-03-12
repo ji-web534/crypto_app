@@ -1,7 +1,6 @@
-import React, { Component } from 'react'
 import "./pantalla-inicio.css"
-export default function Pantalla_inicio() {
+ export function Pantalla_inicio() {
   return (
-    <div className='pantalla-inicio'>inicio</div>
+    <div className="pantalla-inicio"><h1>eliga un acitivo porfavor</h1></div>
   )
 }
