@@ -1,23 +1,55 @@
 .side-bar {
-    display: flex;
-    background-color: #0f0f0f;
-    color: white;
-  
-    text-align: center;
-   
-    justify-content: center;
-    align-items: flex-start;
-    flex-direction:  row;
-   gap: 20px;
-   height: 100vh;
-   width: 10%;
-   flex-direction: column;
-     position: relative;
-        left: 0px;
+  display: flex;
+  background-color: #0f0f0f;
+  color: white;
+
+  text-align: center;
+
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: row;
+  gap: 20px;
+  height: 100vh;
+  width: 10%;
+  flex-direction: column;
+  position: relative;
+  left: 0px;
 }
 
-.crypto-card{
-      border-bottom:  1px solid #ffffff;
-        width: 10vw;
-      
+.crypto-card {
+  border-bottom: 1px solid #ffffff;
+  width: 10vw;
+
 }
+
+.buscador {
+  width: 100%;
+  max-width: 400px;
+  margin: 20px auto;
+  position: relative;
+  top: 10000;
+  z-index: 100;
+
+}
+
+.buscador-input {
+  width: 100%;
+  padding: 12px 20px;
+  font-size: 16px;
+  border: 2px solid #ddd;
+  border-radius: 50px;
+  background-color: #ffffff;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  outline: none;
+  box-sizing: border-box;
+}
+
+
+.buscador-input:focus {
+  border-color: #7f90db;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+  padding-left: 25px;/
+}
+
+
