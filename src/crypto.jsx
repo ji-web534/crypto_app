@@ -1,39 +1,27 @@
 import React, { useState, useEffect } from 'react';
 // <-- fetch sin terminar 
  export const Crypto = ({ coinName }) => {
-  const [data, setData] = useState(null);
+const [cryptos, setCryptos] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null); // <-- Faltaba esto
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    setLoading(true);
-    setError(null);
-
-    // El fetch llama al servidor de Node que ya tienes corriendo
-    fetch(`http://localhost:4000/market/${coinName}`)
+    // Solo pedimos la lista completa una vez
+    fetch('http://localhost:4000/market/all')
       .then(res => {
-        if (!res.ok) throw new Error("No se encontró la moneda");
+        if (!res.ok) throw new Error("Error en la red");
         return res.json();
       })
-      .then(json => {
-        setData(json);
+      .then(data => {
+        setCryptos(data);
         setLoading(false);
       })
       .catch(err => {
-        console.error("Error:", err);
-        setError("Error de conexión con el servidor");
+        setError(err.message);
         setLoading(false);
       });
-  }, [coinName]); 
+  }, []);
 
-  if (loading) return <p>Cargando {coinName}...</p>;
-  if (error) return <p style={{ color: 'red' }}>⚠️ {error}</p>;
-
-  return (
-    <div className="crypto-card">
-      <h3>{data.nombre}</h3>
-      <p>Precio: ${data.precio}</p>
-      <span>Símbolo: {data.simbolo}</span>
-    </div>
-  );
+  // Retornamos los datos para que el componente padre los use
+  return { cryptos, loading, error };
 };
