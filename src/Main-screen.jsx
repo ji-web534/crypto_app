@@ -1,13 +1,13 @@
 import React from 'react'
 import './main-screen.css'
-import { Crypto } from './crypto.jsx'
+import { useCrypto } from './crypto.jsx'
 import { useParams } from 'react-router-dom' 
 import { Details_bar } from './Details-bar';
 import { Coin_value } from './Coin-value.JSX';
 
 export default function Main_screen() {
  const { id } = useParams();
-const moneda = Crypto.find((c) => Number(c.id) === Number(id));
+const moneda = useCrypto.find((c) => Number(c.id) === Number(id));
 
 if (!moneda) {
  return (

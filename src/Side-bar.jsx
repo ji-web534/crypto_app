@@ -1,9 +1,13 @@
 import React from 'react'
 import './side-bar.css'
-import { Crypto } from './crypto.jsx'
+import { useCrypto } from './crypto.jsx'
 import { Link } from 'react-router-dom'
 export default function Side_bar() {
-  
+  const { cryptos, loading, error } = useCrypto(); 
+
+  // 2. Manejamos el estado de carga y error)
+  if (loading) return <div className="side-bar">Cargando criptos...</div>;
+  if (error) return <div className="side-bar">Error: {error}</div>;
   return (
 
 

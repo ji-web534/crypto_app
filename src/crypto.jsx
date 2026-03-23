@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 // <-- fetch sin terminar 
- export const Crypto = ({ coinName }) => {
+ export const useCrypto = () => { // Cambiamos Crypto por useCrypto
 const [cryptos, setCryptos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

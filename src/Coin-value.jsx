@@ -1,10 +1,10 @@
 import React from 'react'
 import"./coin-value.css"
 import { useParams } from 'react-router-dom';
-import { Crypto } from './crypto.jsx';
+import { useCrypto } from './crypto.jsx'
 export  function Coin_value() {
   const { id } = useParams();
-const moneda = Crypto.find((c) => Number(c.id) === Number(id));
+const moneda =useCrypto.find((c) => Number(c.id) === Number(id));
 
   return (
     <div className='Coin-value'style={{ color: moneda. cambio_24h >= 0 ? 'green' : 'red' }}>
