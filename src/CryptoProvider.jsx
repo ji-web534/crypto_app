@@ -21,8 +21,8 @@ export const CryptoProvider = ({ children }) => {
      };
 
      useEffect(() => {
-          updatePrice(); // Carga inicial
-          const interval = setInterval(updatePrice, 60000); // Actualiza cada 1 minuto
+          updatePrice(); l
+          const interval = setInterval(updatePrice, 60000); 
           return () => clearInterval(interval);
      }, []);
 
