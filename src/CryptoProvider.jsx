@@ -21,7 +21,7 @@ export const CryptoProvider = ({ children }) => {
      };
 
      useEffect(() => {
-          updatePrice(); l
+          updatePrice(); 
           const interval = setInterval(updatePrice, 60000); 
           return () => clearInterval(interval);
      }, []);
@@ -32,3 +32,10 @@ return (
     </CryptoContext.Provider>
   );
 };
+
+export const useCrypto = () => {
+     const context = useContext(CryptoContext);
+     if (!context) {
+          throw new Error("useCrypto debe usarse dentro de un proveedor Crypto");
+     }
+     return context;};

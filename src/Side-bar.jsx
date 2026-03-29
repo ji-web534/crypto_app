@@ -1,8 +1,6 @@
 import React from 'react'
 import './side-bar.css'
-
-
-import { useCrypto } from './crypto.jsx'
+import {useCrypto} from './CryptoProvider.jsx'
 import { Link } from 'react-router-dom'
 export default function Side_bar() {
   const { cryptos, loading, error } = useCrypto(); 
@@ -22,7 +20,7 @@ export default function Side_bar() {
           placeholder="Buscar moneda..."
         />
       </div>
-      {Crypto.map(crypto => (
+      {useCrypto.map(crypto => (
         <Link to={`/crypto/${crypto.id}`} style={{ textDecoration: 'none', color: 'inherit' }} >
           <div key={crypto.id} className="crypto-card">
             <img src={crypto.imagen} alt={crypto.nombre} width="30" />
