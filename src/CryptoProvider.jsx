@@ -3,12 +3,12 @@ import React, { createContext, useState, useEffect, useContext } from 'react';
 const CryptoContext = createContext();
 
 export const CryptoProvider = ({ children }) => {
-     const [crypto, setCrypto] = useState(null);
+     const [crypto, setCrypto] = useState([]);
      const [loading, setLoading] = useState(true);
      const [error, setError] = useState(null);
 
      const updatePrice = () => {
-          fetch('http://localhost:4000/market/bitcoin')
+          fetch('http://localhost:4000/market/all')
                .then(res => res.json())
                .then(data => {
                     setCrypto(data);
