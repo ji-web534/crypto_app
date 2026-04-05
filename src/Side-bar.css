@@ -4,15 +4,13 @@
   background-color: #0f0f0f;
   color: white;
   height: 100vh;
-  position: fixed; 
-  left: 0;
-  top: 0;
   padding: 20px 10px; 
   overflow-y: auto; 
   overflow-x: hidden;
   align-items: stretch; 
   box-sizing: border-box;
-  width: 30vh;
+ min-width: 13vw; 
+
 }
 
 .side-bar::-webkit-scrollbar {
@@ -20,7 +18,7 @@
 }
 .crypto-card {
   border-bottom: 1px solid #ffffff;
-  width: 10vw;
+ padding: 0%;
 
 }
 
