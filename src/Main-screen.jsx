@@ -4,7 +4,7 @@ import { useCrypto } from './CryptoProvider.jsx'
 import { useParams } from 'react-router-dom' 
 import { Details_bar } from './Details-bar';
 import { Coin_value } from './Coin-value.jsx'; 
-
+import CryptoChart from './CryptoChart.jsx';
 
 export default function Main_screen() {
 const { crypto, loading: cryptoLoading } = useCrypto(); 
@@ -57,11 +57,11 @@ const { crypto, loading: cryptoLoading } = useCrypto();
 
       <div> 
         
-        <Details_bar  />
+        <Details_bar moneda={moneda}  />
 
         <div >
          <div className="chart-wrapper">
-        {loading ? (
+        {loadingChart ? (
             <p>Cargando gráfico...</p> 
         ) : (
             <CryptoChart data={chartData} /> 
@@ -69,10 +69,10 @@ const { crypto, loading: cryptoLoading } = useCrypto();
     </div>
         </div>
 
-      <Coin_value/>
+      <Coin_value moneda={moneda}/>
 
       </div>
     </div>
   )
-  
+
 } 
