@@ -3,7 +3,7 @@ import * as LightweightCharts from 'lightweight-charts';
 
 export default function CryptoChart({ data }) {
 const chartContainerRef = useRef(null);
-
+console.log("cosa",data)
     useEffect(() => {
         // Validación de entrada
         if (!data || data.length === 0 || !chartContainerRef.current) {

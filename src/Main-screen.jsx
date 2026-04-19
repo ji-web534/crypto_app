@@ -33,14 +33,24 @@ export default function Main_screen() {
                 
                 // ¡IMPORTANTE! Validar que 'data' sea un array antes de transformarlo
                 if (Array.isArray(data)) {
+                    // Transformamos los datos a un formato que el gráfico entienda
                     const formatted = data.map(item => ({
                         time: item.fecha, 
                         value: item.precio 
                     }));
-                    setChartData(formatted);
+
+                    // FILTRO ANTI-DUPLICADOS: La librería falla si hay dos fechas iguales.
+                    // También ordenamos por fecha para asegurar que la línea se dibuje bien.
+                    const uniqueData = formatted
+                        .filter((v, i, a) => a.findIndex(t => t.time === v.time) === i)
+                        .sort((a, b) => new Date(a.time) - new Date(b.time));
+
+                    // Guardamos los datos limpios en el estado
+                    setChartData(uniqueData);
+
                 } else {
                     console.error("Los datos recibidos no son un array:", data);
-                    setChartData([]); // Aseguramos que quede vacío si no hay datos válidos
+                    setChartData([]); 
                 }
 
             } catch (error) {
