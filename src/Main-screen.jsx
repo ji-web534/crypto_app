@@ -25,30 +25,39 @@ export default function Main_screen() {
                 const response = await fetch(`http://localhost:4000/market/history/${id}`);
                 
                 // ¡IMPORTANTE! Validar si la respuesta es exitosa
+       // 1. Verificamos si la respuesta de la API es correcta
                 if (!response.ok) {
                     throw new Error(`Error del servidor: ${response.status}`);
                 }
 
                 const data = await response.json();
                 
+                // Log de depuración para ver qué llega exactamente del servidor
+                console.log("DATOS CRUDOS DEL SERVIDOR:", data);
+
                 // ¡IMPORTANTE! Validar que 'data' sea un array antes de transformarlo
                 if (Array.isArray(data)) {
-                    // Transformamos los datos a un formato que el gráfico entienda
+                    
+                    // A. Transformamos los datos (Primero se declara la variable)
                     const formatted = data.map(item => ({
                         time: item.fecha, 
                         value: item.precio 
                     }));
 
-                    // FILTRO ANTI-DUPLICADOS: La librería falla si hay dos fechas iguales.
-                    // También ordenamos por fecha para asegurar que la línea se dibuje bien.
+                    // B. Ahora que ya existe, podemos hacer el log de los datos formateados
+                    console.log("DATOS FORMATEADOS PARA EL GRÁFICO:", formatted);
+
+                    // C. FILTRO ANTI-DUPLICADOS: La librería falla si hay dos fechas iguales.
+                    // También ordenamos por fecha para asegurar que la línea se dibuje bien cronológicamente.
                     const uniqueData = formatted
                         .filter((v, i, a) => a.findIndex(t => t.time === v.time) === i)
                         .sort((a, b) => new Date(a.time) - new Date(b.time));
 
-                    // Guardamos los datos limpios en el estado
+                    // D. Guardamos los datos limpios y ordenados en el estado
                     setChartData(uniqueData);
 
                 } else {
+                    // Si no es un array, informamos el error y limpiamos el gráfico
                     console.error("Los datos recibidos no son un array:", data);
                     setChartData([]); 
                 }
