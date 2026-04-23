@@ -11,63 +11,32 @@ export default function CryptoChart({ data }) {
 
         chartContainerRef.current.innerHTML = '';
         // 2. CREACIÓN DEL GRÁFICO
-        const chart = LightweightCharts.createChart(chartContainerRef.current, {
+   const chart = LightweightCharts.createChart(chartContainerRef.current, {
             width: chartContainerRef.current.clientWidth,
             height: 300,
             layout: {
-                backgroundColor: '#131722',
+                background: { color: '#131722' },
                 textColor: '#d1d4dc',
             },
-            grid: {
-                vertLines: { color: '#2f333e' },
-                horzLines: { color: '#2f333e' },
-            },
         });
 
-        // 3. CREACIÓN DE LA SERIE (Aquí es donde estaba tu error)
-        // El método se llama sobre la instancia 'chart' que acabamos de crear
-        const areaSeries = chart.addAreaSeries({
-            lineColor: '#2962ff',
-            topColor: '#2962ff',
-            bottomColor: 'rgba(41, 98, 255, 0.28)',
-            lineWidth: 2,
-        });
+        try {
+            // La serie se crea AQUÍ ADENTRO usando la constante 'chart'
+            const areaSeries = chart.addAreaSeries({
+                lineColor: '#2962ff',
+                topColor: '#2962ff',
+                bottomColor: 'rgba(41, 98, 255, 0.28)',
+            });
 
-        // 4. PASAR LOS DATOS
-        areaSeries.setData(data);
+            areaSeries.setData(data);
+            chart.timeScale().fitContent();
+        } catch (err) {
+            console.error("❌ Error al añadir la serie:", err);
+        }
 
-        // Ajustar el gráfico para que se vean todos los puntos
-        chart.timeScale().fitContent();
+        return () => chart.remove(); // Limpieza al salir
+    }, [data]);
 
-        // Guardamos la referencia para poder limpiar
-        chartRef.current = chart;
-
-        // 5. LIMPIEZA (Fundamental en React para que no se dupliquen gráficos)
-        return () => {
-            chart.remove();
-        };
-    }, [data]); // Se vuelve a ejecutar solo si cambian los datos
-    try {
-
-        const areaSeries = chart.addSeries(SeriesType.Area, {
-            lineColor: '#2962ff',
-            topColor: '#2962ff',
-            bottomColor: 'rgba(41, 98, 255, 0.28)',
-            lineWidth: 2,
-        });
-
-        areaSeries.setData(data);
-        chart.timeScale().fitContent();
-
-    } catch (err) {
-        console.error("❌ Error al añadir la serie:", err);
-        console.log("Funciones disponibles en 'chart':", Object.keys(chart));
-    }
-    //  Limpieza
-    return () => {
-        chart.remove();
-    };
- [data];
 return (
     <div
         ref={chartContainerRef}
