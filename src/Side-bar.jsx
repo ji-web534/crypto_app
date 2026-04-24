@@ -24,13 +24,13 @@ export default function Side_bar() {
       <div className="buscador">
         <input
           type="text"
-          class="buscador-input"
+          className="buscador-input"
           placeholder="Buscar moneda..."
         />
       </div>
       {crypto.map(item => (
-        <Link to={`/crypto/${item.id}`} style={{ textDecoration: 'none', color: 'inherit' }} >
-          <div key={item.id} className="crypto-card">
+        <Link key={item.id} to={`/crypto/${item.id}`} style={{ textDecoration: 'none', color: 'inherit' }} >
+          <div className="crypto-card">
             <img src={item.image} alt={item.name} width="30" />
             <div className=''>
 
