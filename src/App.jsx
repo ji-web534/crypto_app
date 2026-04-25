@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import Main_screen from './Main-screen.jsx'
+import Main_screen from './components/Main-screen.jsx'
 import { Route, Router, Routes } from 'react-router-dom'
 import './app.css'
-import { Pantalla_inicio } from './Pantalla-inicio.jsx'
+import { Pantalla_inicio } from './components/Pantalla-inicio.jsx'
 import Side_bar from './Side-bar.jsx'
 function App() {
 

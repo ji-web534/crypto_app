@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import './main-screen.css'
 import { useCrypto } from './CryptoProvider.jsx'
 import { useParams } from 'react-router-dom' 
-import { Details_bar } from './Details-bar';
+import { Details_bar } from './Details-bar.jsx';
 import { Coin_value } from './Coin-value.jsx'; 
 import CryptoChart from './CryptoChart.jsx';
 

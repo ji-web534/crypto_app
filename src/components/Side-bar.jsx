@@ -1,6 +1,6 @@
 import React from 'react'
 import './side-bar.css'
-import { useCrypto } from './CryptoProvider.jsx';
+import { useCrypto } from './components/CryptoProvider.jsx';
 import { Link } from 'react-router-dom';
 import { createChart } from 'lightweight-charts';
 export default function Side_bar() {
