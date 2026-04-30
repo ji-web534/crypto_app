@@ -1,76 +1,98 @@
-import React, { useEffect, useRef } from 'react';
-import { createChart } from 'lightweight-charts';
+import React, { useEffect, useRef, useState } from 'react';
+import * as LightweightCharts from 'lightweight-charts';
 
 export default function CryptoChart({ data }) {
     const chartContainerRef = useRef();
+    const chartRef = useRef(null);
+    const [isReady, setIsReady] = useState(false);
 
     useEffect(() => {
-        if (!chartContainerRef.current || !data || data.length === 0) return;
+        if (!chartContainerRef.current) return;
 
-        chartContainerRef.current.innerHTML = '';
-        let chart;
+        // 1. Solo inicializamos si el contenedor tiene dimensiones reales
+        if (chartContainerRef.current.clientWidth === 0) {
+            const timeoutId = setTimeout(() => setIsReady(prev => !prev), 100);
+            return () => clearTimeout(timeoutId);
+        }
 
         try {
-            // 1. Crear el gráfico (Sintaxis v5)
-            chart = createChart(chartContainerRef.current, {
+            // 2. Limpieza de seguridad
+            if (chartRef.current) {
+                chartRef.current.remove();
+                chartRef.current = null;
+            }
+            chartContainerRef.current.innerHTML = '';
+
+            // 3. Creación del gráfico
+            const chart = LightweightCharts.createChart(chartContainerRef.current, {
                 width: chartContainerRef.current.clientWidth,
                 height: 300,
                 layout: {
                     background: { color: '#131722' },
                     textColor: '#d1d4dc',
                 },
+                timeScale: {
+                    borderVisible: false,
+                },
+            });
+            chartRef.current = chart;
+
+            // 4. Creación de la serie usando el método de compatibilidad
+            const areaSeries = chart.addAreaSeries({
+                lineColor: '#2962ff',
+                topColor: '#2962ff',
+                bottomColor: 'rgba(41, 98, 255, 0.28)',
+                lineWidth: 2,
             });
 
-            // 2. En la v5, si addAreaSeries falla, 'Area' como string es el fallback oficial
-            // Intentamos el método directo y si no, el genérico.
-            const areaSeries = chart.addAreaSeries ? 
-                chart.addAreaSeries({
-                    lineColor: '#2962ff',
-                    topColor: '#2962ff',
-                    bottomColor: 'rgba(41, 98, 255, 0.28)',
-                }) : 
-                chart.addSeries('Area', {
-                    lineColor: '#2962ff',
-                });
-
-            // 3. Procesar datos (La v5 es MUY estricta con el orden)
-            const processedData = [...data]
-                .map(item => ({
-                    time: Number(item.time),
-                    value: Number(item.value)
-                }))
-                .sort((a, b) => a.time - b.time);
-
-            // Eliminar duplicados de tiempo (Causa el Assertion failed en v5)
-            const finalData = [...data]
-                .map(item => {
-                    // Si el timestamp tiene 13 dígitos (milisegundos), lo bajamos a 10 (segundos)
-                    let timestamp = Number(item.time);
-                    if (timestamp > 10000000000) { 
-                        timestamp = Math.floor(timestamp / 1000); 
-                    }
-                    
-                    return {
-                        time: timestamp,
+            // 5. Procesamiento de datos ultra-estricto (Anti-Assertion)
+            if (data && data.length > 0) {
+                const seenTimes = new Set();
+                const cleanData = data
+                    .map(item => ({
+                        // Aseguramos segundos y números primitivos
+                        time: Number(item.time) > 10000000000 ? Math.floor(Number(item.time) / 1000) : Math.floor(Number(item.time)),
                         value: parseFloat(item.value)
-                    };
-                })
-                .filter(item => !isNaN(item.time) && !isNaN(item.value))
-                .sort((a, b) => a.time - b.time)
-                .filter((item, index, self) => 
-                    index === 0 || item.time > self[index - 1].time
-                );
+                    }))
+                    .filter(item => {
+                        if (isNaN(item.time) || isNaN(item.value) || seenTimes.has(item.time)) return false;
+                        seenTimes.add(item.time);
+                        return true;
+                    })
+                    .sort((a, b) => a.time - b.time);
 
-            console.log("🚀 Datos finales que recibirá la v5:", finalData);
-
-            if (finalData.length > 0) {
-                areaSeries.setData(finalData);
-                chart.timeScale().fitContent();
+                if (cleanData.length > 0) {
+                    areaSeries.setData(cleanData);
+                    chart.timeScale().fitContent();
+                }
             }
+
+            setIsReady(true);
+        } catch (error) {
+            console.error("❌ Error en el montaje del gráfico:", error);
+        }
+
+        return () => {
+            if (chartRef.current) {
+                chartRef.current.remove();
+                chartRef.current = null;
+            }
+        };
+    }, [data, isReady]); // Re-ejecuta si los datos cambian o si el estado de listo cambia
 
     return (
         <div 
             ref={chartContainerRef} 
-            style={{ width: '100%', height: '300px', backgroundColor: '#131722' }} 
-        />
+            style={{ 
+                width: '100%', 
+                height: '300px', 
+                backgroundColor: '#131722',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+            }} 
+        >
+            {!chartRef.current && <span style={{ color: '#555' }}>Iniciando motor gráfico...</span>}
+        </div>
     );
+}
