@@ -1,65 +1,76 @@
-
-import React, { useEffect, useRef, useState } from 'react';
-import { createChart } from 'lightweight-charts';
+import React, { useEffect, useRef } from 'react';
+import * as Charts from 'lightweight-charts';
 
 export default function CryptoChart({ data }) {
     const chartContainerRef = useRef();
     const chartRef = useRef(null);
-    const [ready, setReady] = useState(false);
-
-    // Esperamos a que React termine de montar todo
-    useEffect(() => {
-        const timer = setTimeout(() => setReady(true), 300);
-        return () => clearTimeout(timer);
-    }, []);
 
     useEffect(() => {
-        if (!ready || !chartContainerRef.current || !data || data.length === 0) return;
+        if (!chartContainerRef.current || !data || data.length === 0) return;
 
-        // Limpiamos si ya existe algo
+        // 1. Limpieza total del DOM
+        chartContainerRef.current.innerHTML = '';
         if (chartRef.current) {
             chartRef.current.remove();
             chartRef.current = null;
         }
-        chartContainerRef.current.innerHTML = '';
+
+        // 2. Procesamiento de datos ultra-seguro (Números puros)
+        const seen = new Set();
+        const cleanData = data
+            .map(item => ({
+                time: Math.floor(new Date(item.time).getTime() / 1000),
+                value: parseFloat(item.value)
+            }))
+            .filter(item => {
+                // Filtramos duplicados (como el del 3 de mayo) y valores nulos
+                if (isNaN(item.time) || isNaN(item.value) || seen.has(item.time)) return false;
+                seen.add(item.time);
+                return true;
+            })
+            .sort((a, b) => a.time - b.time);
+
+        if (cleanData.length === 0) return;
 
         try {
-            const chart = createChart(chartContainerRef.current, {
+            // 3. Crear el gráfico
+            const chart = Charts.createChart(chartContainerRef.current, {
                 width: chartContainerRef.current.clientWidth || 600,
                 height: 300,
                 layout: { background: { color: '#131722' }, textColor: '#d1d4dc' },
             });
             chartRef.current = chart;
 
-            const areaSeries = chart.addAreaSeries({
-                lineColor: '#2962ff',
-                topColor: '#2962ff',
-                bottomColor: 'rgba(41, 98, 255, 0.28)',
+            // 4. El método más antiguo y compatible
+            const series = chart.addLineSeries({
+                color: '#2962ff',
+                lineWidth: 2,
             });
 
-            // Limpieza de duplicados (por el error del 3 de mayo que vimos)
-            const seen = new Set();
-            const cleanData = data
-                .filter(item => {
-                    if (seen.has(item.time)) return false;
-                    seen.add(item.time);
-                    return true;
-                })
-                .map(item => ({
-                    time: item.time,
-                    value: parseFloat(item.value)
-                }))
-                .sort((a, b) => new Date(a.time) - new Date(b.time));
-
-            areaSeries.setData(cleanData);
+            series.setData(cleanData);
             chart.timeScale().fitContent();
 
         } catch (err) {
-            console.error("Error en el gráfico:", err);
+            console.error("❌ Fallo definitivo:", err);
         }
 
-        return () => { if (chartRef.current) chartRef.current.remove(); };
-    }, [ready, data]);
+        return () => {
+            if (chartRef.current) {
+                chartRef.current.remove();
+                chartRef.current = null;
+            }
+        };
+    }, [data]);
 
-    return <div ref={chartContainerRef} style={{ width: '100%', height: '300px' }} />;
+    return (
+        <div 
+            ref={chartContainerRef} 
+            style={{ 
+                width: '100%', 
+                height: '300px', 
+                backgroundColor: '#131722',
+                border: '1px solid #333' 
+            }} 
+        />
+    );
 }
