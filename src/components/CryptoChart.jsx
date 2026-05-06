@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import * as Charts from 'lightweight-charts';
-
+import "./crypto-chart.css"
 export default function CryptoChart({ data }) {
     const chartContainerRef = useRef();
     const chartRef = useRef(null);
@@ -63,14 +63,9 @@ export default function CryptoChart({ data }) {
     }, [data]);
 
     return (
-        <div 
+        <div className='crypto-chart-container'
             ref={chartContainerRef} 
-            style={{ 
-                width: '100%', 
-                height: '300px', 
-                backgroundColor: '#131722',
-                border: '1px solid #333' 
-            }} 
+            
         />
     );
 }
