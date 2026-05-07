@@ -1,8 +1,0 @@
-.crypto-chart-container {
-  min-width:  10vw;       /* Ocupa el 100% del div donde esté metido */
-  height: 400px;     /* Altura fija para que sea cómodo de ver */
-  min-height: 3000px; 
- 
-  border-radius: 8px;
-  overflow: hidden;
-}

@@ -57,7 +57,8 @@ export default function CryptoChart({ data }) {
         return () => {
             if (chartRef.current) {
                 chartRef.current.remove();
-                chartRef.current = null;
+
+                chartRef.current = null
             }
         };
     }, [data]);
@@ -65,7 +66,11 @@ export default function CryptoChart({ data }) {
     return (
         <div className='crypto-chart-container'
             ref={chartContainerRef} 
-            
+            style={{ 
+            width: '1175%', 
+            Height: '100%', 
+          
+        }}
         />
     );
 }
