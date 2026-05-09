@@ -35,8 +35,8 @@ export default function CryptoChart({ data }) {
         try {
             // 3. Crear el gráfico
             const chart = Charts.createChart(chartContainerRef.current, {
-                width: chartContainerRef.current.clientWidth || 600,
-                height: 300,
+                width: chartContainerRef.current.clientWidth || 1100,
+                height: 900,
                 layout: { background: { color: '#131722' }, textColor: '#d1d4dc' },
             });
             chartRef.current = chart;
@@ -64,7 +64,7 @@ export default function CryptoChart({ data }) {
     }, [data]);
 
     return (
-        <div className='crypto-chart-container'
+        <div 
             ref={chartContainerRef} 
             style={{ 
             width: '175%', 

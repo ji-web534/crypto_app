@@ -91,11 +91,11 @@ export default function Main_screen() {
                 <Details_bar moneda={moneda} />
 
                 <div>
-                    <div className="chart-wrapper">
+                    <div >
                         {loadingChart ? (
                             <p>Cargando gráfico...</p> 
                         ) : (
-                            <CryptoChart data={chartData}   className="crypto-chart-container"/> 
+                            <CryptoChart data={chartData}  /> 
                         )}
                     </div>
                 </div>
