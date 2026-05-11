@@ -23,7 +23,7 @@ export default function CryptoChart({ data }) {
                 value: parseFloat(item.value)
             }))
             .filter(item => {
-                // Filtramos duplicados (como el del 3 de mayo) y valores nulos
+                // Filtramos duplicados  y valores nulos
                 if (isNaN(item.time) || isNaN(item.value) || seen.has(item.time)) return false;
                 seen.add(item.time);
                 return true;
@@ -32,13 +32,20 @@ export default function CryptoChart({ data }) {
 
         if (cleanData.length === 0) return;
 
-        try {
-            // 3. Crear el gráfico
-            const chart = Charts.createChart(chartContainerRef.current, {
-                width: chartContainerRef.current.clientWidth || 1100,
-                height: 900,
-                layout: { background: { color: '#131722' }, textColor: '#d1d4dc' },
-            });
+      try {
+    // 3. Crear el gráfico
+    const chart = Charts.createChart(chartContainerRef.current, {
+        // Usamos el ancho total del contenedor, o 800 como base si falla
+        width: chartContainerRef.current.clientWidth || 800, 
+        
+        // Bajamos el alto a 400 o 500 (900 era demasiado)
+        height: 400, 
+        
+        layout: { 
+            background: { color: '#131722' }, 
+            textColor: '#d1d4dc' 
+        },
+    });
             chartRef.current = chart;
 
             // 4. El método más antiguo y compatible
