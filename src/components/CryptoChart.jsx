@@ -39,7 +39,7 @@ export default function CryptoChart({ data }) {
         width: chartContainerRef.current.clientWidth || 800, 
         
         // Bajamos el alto a 400 o 500 (900 era demasiado)
-        height: 400, 
+        height: 650, 
         
         layout: { 
             background: { color: '#131722' }, 
