@@ -1,12 +1,13 @@
 
 .main-screen {
-    display: flex;
+   display: flex;
+    flex-direction: column;
     background-color: #161a25;
-    color: #faf5f5;
-   
-     height: 100%;
-     overflow: hidden;
-     align-items: center;
-     justify-content: center;
-     width: 100vw;
-}
+    color: #ffffff;
+    padding-top: 70px; 
+    
+    width: 85vw;
+    height: 100vh;
+    box-sizing: border-box;
+    overflow: hidden; /
+    }
