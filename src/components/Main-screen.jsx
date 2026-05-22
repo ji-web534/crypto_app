@@ -32,8 +32,7 @@ export default function Main_screen() {
 
                 const data = await response.json();
                 
-                // Log de depuración para ver qué llega exactamente del servidor
-                console.log("DATOS CRUDOS DEL SERVIDOR:", data);
+                
 
                 // ¡IMPORTANTE! Validar que 'data' sea un array antes de transformarlo
                 if (Array.isArray(data)) {
@@ -44,8 +43,7 @@ export default function Main_screen() {
                         value: item.precio 
                     }));
 
-                    // B. Ahora que ya existe, podemos hacer el log de los datos formateados
-                    console.log("DATOS FORMATEADOS PARA EL GRÁFICO:", formatted);
+                    
 
                     // C. FILTRO ANTI-DUPLICADOS: La librería falla si hay dos fechas iguales.
                     // También ordenamos por fecha para asegurar que la línea se dibuje bien cronológicamente.
